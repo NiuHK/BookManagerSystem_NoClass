@@ -1,0 +1,10 @@
+﻿  DatabaseOperation.cpp
+  Main.cpp
+  Menu.cpp
+  ReaderOperation.cpp
+  UserOperation.cpp
+  globals.cpp
+  正在生成代码...
+D:\repos\BMS-OneFile\ReaderOperation.cpp(189): warning C4715: “searchBooks”: 不是所有的控件路径都返回值
+D:\repos\BMS-OneFile\DatabaseOperation.cpp(41): warning C4715: “addBook”: 不是所有的控件路径都返回值
+  BMS-OneFile.vcxproj -> D:\repos\BMS-OneFile\x64\Debug\BMS-OneFile.exe

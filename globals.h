@@ -1,0 +1,13 @@
+#pragma once
+#ifndef globals_H
+#define globals_H
+#include"Struct.h"
+extern int numBooks;//借阅的数量
+extern User currentUser;// 全局变量,当前用户
+extern Book* books;//图书馆结构体数组头指针
+extern string DATA_BASE_PATH;//图书馆地址
+extern string BOAED_PATH;//公告地址
+extern int  borrowedBooks[100];//借阅的id
+extern int bookNumber;//借阅数量	最大借100本书
+//library数量可为0
+#endif 
