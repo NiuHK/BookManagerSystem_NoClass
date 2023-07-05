@@ -124,20 +124,85 @@ void manageExceptionalReturnsU() {
     back();
 }
 
+// 管理员修改密码
+void changePasswordSU() {
+    // 实现修改密码逻辑
+    cout << endl << endl;
+    cout << "输入更改密码的账号：\n";
+    string username, password;
+    cin >> username;
+
+
+    string newPassword;
+    cout << "请输入新密码：\n";
+    cin >> newPassword;
+    passwdChange(username, newPassword);
+    back();
+    return;
+}
+
 // 修改密码
 void changePasswordU() {
     // 实现修改密码逻辑
     cout << endl << endl;
-
-    cout << endl << endl;
-    back();
+ //   cout << "输入更改密码的账号：\n";
+    string  password;
+   // cin >> username;
+    
+        cout << "确认旧密码：";
+        cin >> password;
+    
+        ifstream userFile(USER_PATH);
+        if (userFile.is_open()) {
+            User user;
+            while (userFile >> user.username >> user.password) {
+                if (user.username == currentUser.username && user.password == password) {
+                    userFile.close();
+    
+                    string newPassword;
+                    cout << "请输入新密码：\n";
+                    cin >> newPassword;
+                    passwdChange(currentUser.username, newPassword);
+                    back();
+                    return;
+                }
+            }
+            userFile.close();
+        }
+    
+        cout << "账号或密码不正确！" << endl;
+    
+        cout << endl << endl;
+        back();
 }
 
 // 管理普通用户
 void manageUsersU() {
     // 实现管理普通用户逻辑
     cout << endl << endl;
-
+    printUsers();
+    cout << "请选择：\n";
+    cout<<"1.添加用户\n";
+    cout<<"2.删除用户\n";
+    int choice;
+    cin>>choice;
+    if (choice == 1) {
+		string username, password;
+		cout << "请输入用户名：\n";
+		cin >> username;
+		cout << "请输入密码：\n";
+		cin >> password;
+		addUser(username, password);
+	}
+    else if (choice == 2) {
+		string username;
+		cout << "请输入用户名：\n";
+		cin >> username;
+		deleteUser(username);
+	}
+    else {
+		cout<<"输入错误！\n";
+	}
     cout << endl << endl;
     back();
 }
@@ -146,7 +211,7 @@ void manageUsersU() {
 void manageLibrariansU() {
     // 实现管理图书管理员逻辑
     cout << endl << endl;
-   
+    addSU();
     cout << endl << endl;
     back();
 }

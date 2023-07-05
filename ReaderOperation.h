@@ -17,5 +17,9 @@ void readerConstructed(string username);
     bool clearDatabase(string username);
     void editTxtFile(const string& filename);
     void printTxtFile(const string& filename);
-
+    bool passwdChange(string username, string newPassword);
+    void printUsers();
+    void addUser(string username, string password);
+    bool deleteUser(string username);
+    void addSU();
 

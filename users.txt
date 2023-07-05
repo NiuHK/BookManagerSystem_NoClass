@@ -1,3 +1,4 @@
-admin 0000
-librarian 0000
-user 0000
+root 0000 admin
+librarian 0000 librarian
+user 0000 user
+test3 0000 librarian

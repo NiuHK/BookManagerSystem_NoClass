@@ -10,10 +10,10 @@ void login() {
     cout << "密码：";
     cin >> password;
 
-    ifstream userFile("users.txt");
+    ifstream userFile(USER_PATH);
     if (userFile.is_open()) {
         User user;
-        while (userFile >> user.username >> user.password) {
+        while (userFile >> user.username >> user.password>>user.userCatgory) {
             if (user.username == username && user.password == password) {
                 currentUser = user;
                 userFile.close();
@@ -35,12 +35,12 @@ void showMenu(const User& user) {
     }
 
     cout << "欢迎，" << currentUser.username << "！请选择您的角色：" << endl;//输出全局currentuser
-    if (user.username == "admin") {
+    if (user.userCatgory == "admin") {
         cout << "1. 普通用户" << endl;
         cout << "2. 图书管理员" << endl;
         cout << "3. 超级管理员" << endl;
     }
-    else if (user.username == "librarian") {
+    else if (user.userCatgory == "librarian") {
         cout << "1. 普通用户" << endl;
         cout << "2. 图书管理员" << endl;
     }
@@ -58,15 +58,15 @@ void showMenu(const User& user) {
     switch (choice) {
     case 1:
         userMenu(user);
-        currentUser.userCatgory = "user";
+      //  currentUser.userCatgory = "user";
         break;
     case 2:
         librarianMenu(user);
-        currentUser.userCatgory = "librarian";
+       // currentUser.userCatgory = "librarian";
         break;
     case 3:
         adminMenu(user);
-        currentUser.userCatgory = "admin";
+    //    currentUser.userCatgory = "admin";
         break;
     default:
         cout << "无效的用户！" << endl;
@@ -87,6 +87,7 @@ void userMenu(const User& user) {
     cout << "3. 查询图书信息" << endl;
     cout << "4. 查询个人信息" << endl;
     cout << "5. 查看公告" << endl;
+    cout << "6. 更改密码" << endl;
     cout << "请选择：";
 
     int choice;
@@ -107,6 +108,9 @@ void userMenu(const User& user) {
         break;
     case 5:
         viewAnnouncementU();
+        break;
+    case 6:
+        changePasswordU();
         break;
     default:
         cout << "无效的选择！" << endl;
@@ -130,6 +134,7 @@ void librarianMenu(const User& user) {
     cout << "7. 删除图书" << endl;
     cout << "8. 发布公告" << endl;
     cout << "9. 异常还书管理" << endl;
+    cout << "10. 更改密码" << endl;
     cout << "请选择：";
 
     int choice;
@@ -162,6 +167,9 @@ void librarianMenu(const User& user) {
         break;
     case 9:
         manageExceptionalReturnsU();
+        break;
+    case 10:
+        changePasswordU();
         break;
     default:
         cout << "无效的选择！" << endl;
@@ -223,13 +231,13 @@ void adminMenu(const User& user) {
         manageExceptionalReturnsU();
         break;
     case 10:
-        changePasswordU();
+        changePasswordSU();
         break;
     case 11:
         manageUsersU();
         break;
     case 12:
-        manageLibrariansU();
+       manageLibrariansU();
         break;
     case 13:
        listLibrariansU();
@@ -247,15 +255,16 @@ void back() {
     cin >> judge;
     if (judge == 'y' || judge == 'Y') {
         cout << endl << endl;
-        if (currentUser.username == "librarian") {
+        if (currentUser.userCatgory == "librarian") {
             librarianMenu(currentUser);
         }
-        else if (currentUser.username == "admin") {
+        else if (currentUser.userCatgory == "admin") {
             adminMenu(currentUser);
         }
         else {
             userMenu(currentUser);
         }
     }
+    else exit(0);
 }
 
