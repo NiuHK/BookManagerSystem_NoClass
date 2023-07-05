@@ -1,5 +1,0 @@
-4
-1 Book1 Author1 6 1020
-2 Book2 Author2 9 1001
-3 Book3 Author3 11 1002
-4 test1 eriter 15 1998

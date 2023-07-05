@@ -29,6 +29,7 @@ void login() {
 
 // 显示菜单
 void showMenu(const User& user) {
+    system("cls");
     if (user.username.empty()) {
         cout << "请先登录！" << endl;
         return;
@@ -36,13 +37,15 @@ void showMenu(const User& user) {
 
     cout << "欢迎，" << currentUser.username << "！请选择您的角色：" << endl;//输出全局currentuser
     if (user.userCatgory == "admin") {
-        cout << "1. 普通用户" << endl;
+    /*    cout << "1. 普通用户" << endl;
         cout << "2. 图书管理员" << endl;
-        cout << "3. 超级管理员" << endl;
+        cout << "3. 超级管理员" << endl;*/
+        adminMenu(user);
     }
     else if (user.userCatgory == "librarian") {
-        cout << "1. 普通用户" << endl;
-        cout << "2. 图书管理员" << endl;
+    /*    cout << "1. 普通用户" << endl;
+        cout << "2. 图书管理员" << endl;*/
+        librarianMenu(user);
     }
     else {
         userMenu(user);
@@ -76,7 +79,7 @@ void showMenu(const User& user) {
 
 // 普通用户菜单
 void userMenu(const User& user) {
-
+    system("cls");
     readerConstructed(user.username);//初始化用户库
     loadDatabase();//初始化图书库
 
@@ -92,7 +95,7 @@ void userMenu(const User& user) {
 
     int choice;
     cin >> choice;
-
+    system("cls");
     switch (choice) {
     case 1:
         borrowBookU();
@@ -120,7 +123,7 @@ void userMenu(const User& user) {
 
 // 图书管理员菜单
 void librarianMenu(const User& user) {
-
+    system("cls");
     readerConstructed(user.username);//初始化用户库
     loadDatabase();//初始化图书库
 
@@ -139,7 +142,7 @@ void librarianMenu(const User& user) {
 
     int choice;
     cin >> choice;
-
+    system("cls");
     switch (choice) {
     case 1:
         borrowBookU();
@@ -179,7 +182,7 @@ void librarianMenu(const User& user) {
 
 // 超级管理员菜单
 void adminMenu(const User& user) {
-
+    system("cls");
     readerConstructed(user.username);//初始化用户库
     loadDatabase();//初始化图书库
 
@@ -201,7 +204,7 @@ void adminMenu(const User& user) {
 
     int choice;
     cin >> choice;
-
+    system("cls");
     switch (choice) {
     case 1:
         borrowBookU();
@@ -249,12 +252,14 @@ void adminMenu(const User& user) {
 }
 
 void back() {
+
     char judge;
     cout << endl << endl;
     cout << "是否返回上级: (Y/N)" << endl;
     cin >> judge;
     if (judge == 'y' || judge == 'Y') {
         cout << endl << endl;
+        system("cls");
         if (currentUser.userCatgory == "librarian") {
             librarianMenu(currentUser);
         }

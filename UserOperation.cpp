@@ -184,6 +184,7 @@ void manageUsersU() {
     cout << "请选择：\n";
     cout<<"1.添加用户\n";
     cout<<"2.删除用户\n";
+    cout << "3.返回上级\n";
     int choice;
     cin>>choice;
     if (choice == 1) {
@@ -200,7 +201,11 @@ void manageUsersU() {
 		cin >> username;
 		deleteUser(username);
 	}
-    else {
+    else if (choice == 3) {
+        back();
+        return;
+    }else
+    {
 		cout<<"输入错误！\n";
 	}
     cout << endl << endl;

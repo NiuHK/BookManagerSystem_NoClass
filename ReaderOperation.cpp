@@ -79,8 +79,8 @@ bool returnBook(string username, int bookId) {
 
 bool printBorrowedBooks(string username) {
 
-    readerConstructed(username);//初始化用户库
-
+    readerConstructed(username);//初始化用每个户库
+   // USER_DATA_PATH + username + ".txt"
     // Print the borrowed books of the reader
 
     if (bookNumber<=0) {
@@ -93,7 +93,7 @@ bool printBorrowedBooks(string username) {
         printSimpleItem(borrowedBooks[i]);//格式输出借阅信息
     }
     return true;
-
+   // clearDatabase(username);
 }
 
 
@@ -265,8 +265,9 @@ void printUsers() {
         cout << endl;
         cout << users[i].username <<'\t' << users[i].userCatgory << "\n";
         cout << "已借阅书籍如下：\n";
+        readerConstructed(users[i].username);//初始化用每个户库
         printBorrowedBooks(users[i].username);
-
+        readerConstructed(currentUser.username);//初始化用每个户库
     }
         return;
 }
@@ -300,7 +301,7 @@ void addUser(string username, string password) {
     int i;
     for (i = 0; i < numUsers; i++) {
         if (users[i].username == username) {
-                cout << "Wrong users.";
+                cout << "Have same users.";
                 return;
         }
     }
@@ -312,6 +313,8 @@ void addUser(string username, string password) {
 		return;
 	}
     userFile1 << username << " " << password << " " << "user" << endl;
+    ofstream file(USER_DATA_PATH+username+".txt");//初始化文件
+    file.close();
 	userFile1.close();
 	cout << "User added successfully." << endl;
 	return;
@@ -342,12 +345,13 @@ bool deleteUser(string username) {
     }
     userFile.close();
 	// 查找指定用户名并删除
-    int i;
+    int i,num;
     for (i = 0; i < numUsers; i++) {
         if (users[i].username == username) {
 			users[i].username = "";
 			users[i].password = "";
             users[i].userCatgory="";
+            num = i;
 			break;
 		}
 	}
@@ -355,7 +359,8 @@ bool deleteUser(string username) {
 	// 保存更改后的用户信息回到文件
 	ofstream outFile(USER_PATH);
     for ( i = 0; i < numUsers; i++) {
-		outFile << users[i].username << ' ' << users[i].password << users[i].userCatgory<< '\n';
+        if(num!=i)
+		outFile << users[i].username << ' ' << users[i].password <<' '<< users[i].userCatgory << '\n';
 	}
 	outFile.close();
 	return true;
