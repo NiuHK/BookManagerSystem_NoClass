@@ -1,4 +1,7 @@
 #include"globals.h"
+
+//extern time_t CURRENT_TIME = time(nullptr);//当前时间
+
 extern  string DATA_BASE_PATH = "./data/Library.txt";
 extern  string DATA_BASE_PATH_SAVE = "./data/Library.data";
 extern string BOAED_PATH = "./data/Announcement.txt";
@@ -10,7 +13,7 @@ extern string USER_PATH="./data/users.txt";
 extern string USER_PATH_SAVE = "./data/users.data";
 extern int numBooks=0;
 extern Book* books = NULL;
-extern  int  borrowedBooks[100] = {0};
+extern  BorrowedBooks  borrowedBooks[100] = {0};
 extern int bookNumber=0;
 //extern const int MAX_USERS = 100;
  User currentUser;

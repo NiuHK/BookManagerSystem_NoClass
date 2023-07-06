@@ -1,7 +1,8 @@
-6
-1 Book1 Author1 2 1020
+7
+1 Book1 Author1 3 1020
 2 Book2 Author2 7 1001
 3 Book3 Author3 11 1002
 4 test1 eriter 15 1998
 5 低挫 kk 10 1998
-6 haha 込込 20 2000
+6 haha 込込 0 2000
+7 adbc author 100 2000

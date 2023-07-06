@@ -23,7 +23,10 @@ struct Book {
     int quantity;
     int year;
 };
-
+struct BorrowedBooks {
+int bookId=0;
+	long long borrowedTime=0;
+};
 
 #endif //STRUCT_H
 

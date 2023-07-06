@@ -94,12 +94,15 @@ void printDatabase() {
     loadDatabase();//输出前先从库初始化
     cout << setw(width) << "-----------书库如下-----------" << endl;
     for (int i = 0; i < numBooks; i++) {
-        cout << setw(width) << "Book ID: " << books[i].bookId << endl;
+        if (books[i].quantity!=0) {
+ cout << setw(width) << "Book ID: " << books[i].bookId << endl;
         cout << setw(width) << "Book Name: " << books[i].bookName << endl;
         cout << setw(width) << "Author: " << books[i].authorName << endl;
         cout << setw(width) << "Quantity: " << books[i].quantity << endl;
         cout << setw(width) << "Publish Year: " << books[i].year << endl;
         cout << setw(width) << "-----------------------------" << endl;
+        }
+       
     }
     cout << setw(width) << "----- End of Database -----" << endl;
 }
@@ -215,4 +218,18 @@ Book* getBooks() {
 
 int getNumBooks() {
     return numBooks;
+}
+
+
+
+void clearTxt(string filename) {
+    std::ofstream file(filename, std::ios::trunc);  // 打开文件并截断内容
+
+    if (file.is_open()) {
+        file.close();
+        std::cout << "文件已成功清空。" << std::endl;
+    }
+    else {
+        std::cout << "无法打开文件。" << std::endl;
+    }
 }

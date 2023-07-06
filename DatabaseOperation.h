@@ -22,3 +22,4 @@ using namespace std;
     int getNextBookId();
     void loadDatabase();//Change the structure
     void saveDatabase();// //Change the structure
+    void clearTxt(string filename);

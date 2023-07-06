@@ -169,7 +169,8 @@ void publishAnnouncementU() {
 void manageExceptionalReturnsU() {
     // 实现异常还书管理逻辑
     cout << endl << endl;
-
+    constructedAll();
+    printWrongCommit();
     cout << endl << endl;
     back();
 }
@@ -208,7 +209,7 @@ void changePasswordU() {
         ifstream userFile(USER_PATH);
         if (userFile.is_open()) {
             User user;
-            while (userFile >> user.username >> user.password) {
+            while (userFile >> user.username >> user.password>>user.userCatgory) {
                 if (user.username == currentUser.username && user.password == password) {
                     userFile.close();
     
@@ -225,6 +226,7 @@ void changePasswordU() {
                     return;
                 }
             }
+
             userFile.close();
         }
     

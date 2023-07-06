@@ -25,7 +25,7 @@ void login() {
     cout << "\t\t--账号：";
     cin >> username;
     cout << "\t\t" << "--密码：";
-    cin >> password;
+    password=getPasswd();
 
     ifstream userFile(USER_PATH);
     if (userFile.is_open()) {
@@ -46,7 +46,6 @@ void login() {
 
 // 显示菜单
 void showMenu(const User& user) {
-   
   system("cls");
     if (user.username.empty()) {
         cout << "请先登录！" << endl;
@@ -68,31 +67,6 @@ void showMenu(const User& user) {
     else {
         userMenu(user);
     }
-
-
-
-
-    //int choice;
-    //cout << "请选择：";
-    //cin >> choice;
-
-    //switch (choice) {
-    //case 1:
-    //    userMenu(user);
-    //  //  currentUser.userCatgory = "user";
-    //    break;
-    //case 2:
-    //    librarianMenu(user);
-    //   // currentUser.userCatgory = "librarian";
-    //    break;
-    //case 3:
-    //    adminMenu(user);
-    ////    currentUser.userCatgory = "admin";
-    //    break;
-    //default:
-    //    cout << "无效的用户！" << endl;
-    //    break;
-    //}
 }
 
 // 普通用户菜单
@@ -112,6 +86,7 @@ void userMenu(const User& user) {
     cout << setw(width) << left << "5. 查看公告";
     cout << setw(width) << left << "6. 更改密码" << endl;
     cout << setw(width) << left << "0. 退出系统" << endl;
+    cout << setw(width) << left << "-1. 注销" << endl;
     cout << "-------------------------------------------" << '\n';
     cout << "请选择：";
 
@@ -141,6 +116,9 @@ void userMenu(const User& user) {
         cout << endl << "System close." << endl;
         exit(0);
         break;
+    case -1:
+        login();
+        break;
     default:
         cout << "无效的选择！" << endl;
         break;
@@ -151,7 +129,7 @@ void userMenu(const User& user) {
 void librarianMenu(const User& user) {
     int width = 20;
     system("cls");
-    readerConstructed(user.username);//初始化用户库
+    readerConstructed(user.username);//初始化用户de库
     loadDatabase();//初始化图书库
     cout << "欢迎， " << currentUser.username << "  ！" << endl;//输出全局currentuser
     cout << setw(width) << left << "图书管理员菜单：" << endl;
@@ -167,6 +145,7 @@ void librarianMenu(const User& user) {
     cout << setw(width) << left << "9. 异常还书管理" ;
     cout << setw(width) << left << "10. 更改密码" << endl;
     cout << setw(width) << left << "0. 退出系统" << endl;
+    cout << setw(width) << left << "-1. 注销" << endl;
     cout << "-------------------------------------------" << '\n';
     cout << setw(width) << left << "请选择：";
 
@@ -174,6 +153,9 @@ void librarianMenu(const User& user) {
     cin >> choice;
     system("cls");
     switch (choice) {
+    case -1:
+        login();
+        break;
     case 1:
         borrowBookU();
         break;
@@ -234,10 +216,11 @@ void adminMenu(const User& user) {
     cout << setw(width) << left << "8. 发布公告" << endl;
     cout << setw(width) << left << "9. 异常还书管理" ;
     cout << setw(width) << left << "10. 修改密码" << endl;
-    cout << setw(width) << left << "11. 管理普通用户" ;
+    cout << setw(width) << left << "11. 管理所有用户" ;
     cout << setw(width) << left << "12. 管理图书管理员" << endl;
     cout << setw(width) << left << "13. 查看书籍列表" ;
     cout << setw(width) << left << "0. 退出系统" << endl;
+    cout << setw(width) << left << "-1. 注销" << endl;
     cout << "-------------------------------------------" << '\n';
     cout << setw(width) << right << "请选择：";
 
@@ -245,6 +228,9 @@ void adminMenu(const User& user) {
     cin >> choice;
     system("cls");
     switch (choice) {
+    case -1:
+        login();
+        break;
     case 1:
         borrowBookU();
         break;
