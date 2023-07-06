@@ -5,7 +5,7 @@ using namespace std;
 
 
 void readerConstructed(string username) {//初始化一个user，从文件读数据；
-ifstream readerFile(username + ".txt");
+ifstream readerFile(USER_DATA_PATH+username + ".txt");
 if (readerFile) {
     int bookId;
     int i=0;
@@ -84,15 +84,18 @@ bool printBorrowedBooks(string username) {
     // Print the borrowed books of the reader
 
     if (bookNumber<=0) {
+        cout << "-------------------------------------------------------------------------------------------\n";
         cout << "No books borrowed by the reader." << endl;
+        cout << "-------------------------------------------------------------------------------------------\n";
         return false;
     }
    // cout << "Borrowed Books: " << endl;
+    cout << "-------------------------------------------------------------------------------------------\n";
     for (int i = 0; i < bookNumber; i++) {
         cout << i+1 << "\t";//输出序号
         printSimpleItem(borrowedBooks[i]);//格式输出借阅信息
     }
-    return true;
+    cout << "-------------------------------------------------------------------------------------------\n";    return true;
    // clearDatabase(username);
 }
 
@@ -100,7 +103,7 @@ bool printBorrowedBooks(string username) {
 bool saveData(string username) {//写到txt中
     // Save reader's borrowed books to file
     sortBookIds(username);
-    ofstream readerFile(username + ".txt");
+    ofstream readerFile(USER_DATA_PATH+username + ".txt");
     if (!readerFile) {
         cout << "Failed to save reader's data." << endl;
         return false;
@@ -130,8 +133,9 @@ bool clearDatabase(string username) {
 
 
 
-void editTxtFile(const string& filename) {
-    std::ofstream outFile(filename, std::ios::out | std::ios::trunc);
+void addTxtFile(const string& filename) {
+    time_t ts = time(NULL);
+    std::ofstream outFile(filename, ios::app);//| std::ios::trunc
 
     if (!outFile) {
         cerr << "Error opening file: " << filename << std::endl;
@@ -141,10 +145,31 @@ void editTxtFile(const string& filename) {
     //Enter text for the file (Enter '0' on a new line to finish)
     string line;
 
+        outFile << "-----"<<ctime(&ts);
     while (getline(cin, line) && line != "0") {
         outFile << line << '\n';
     }
+    outFile << '\n';
+    outFile.close();
+    cout << "已添加！\n";
+}
 
+void editTxtFile(const string& filename) {
+    time_t ts = time(NULL);
+    std::ofstream outFile(filename, ios::out | std::ios::trunc);
+
+    if (!outFile) {
+        cerr << "Error opening file: " << filename << std::endl;
+        return;
+    }
+
+    //Enter text for the file (Enter '0' on a new line to finish)
+    string line;
+    outFile << "-----" << ctime(&ts);
+    while (getline(cin, line) && line != "0") {
+        outFile << line << '\n';
+    }
+    outFile << '\n';
     outFile.close();
     cout << "已发布！\n";
 }
@@ -168,14 +193,14 @@ void printTxtFile(const string& filename) {
 }
 bool searchBooks(const string& searchTerm) {
         // Search for books by title or author in the database
-     //   LibrarySystem library("library_db.txt");
         Book* books = getBooks();
         int numBooks = getNumBooks();
 
         
 
         for (int i = 0; i < numBooks; i++) {
-            if (books[i].bookName == searchTerm || books[i].authorName == searchTerm) {
+            if (AllisNum(searchTerm)) {
+            if (books[i].bookName == searchTerm || books[i].authorName == searchTerm || books[i].bookId == stoi(searchTerm)) {
                 cout << "-------------------------" << endl;
                 cout << "Book ID: " << books[i].bookId << endl;
                 cout << "Book Name: " << books[i].bookName << endl;
@@ -184,6 +209,19 @@ bool searchBooks(const string& searchTerm) {
                 cout << "-------------------------" << endl;
                 return true;
             }
+            }
+            else {
+                if (books[i].bookName == searchTerm || books[i].authorName == searchTerm ) {
+                    cout << "-------------------------" << endl;
+                    cout << "Book ID: " << books[i].bookId << endl;
+                    cout << "Book Name: " << books[i].bookName << endl;
+                    cout << "Author: " << books[i].authorName << endl;
+                    cout << "Quantity: " << books[i].quantity << endl;
+                    cout << "-------------------------" << endl;
+                    return true;
+                }
+            }
+
             return false;
             cout << "Book not found in the database." << endl;
         }
@@ -229,7 +267,7 @@ bool passwdChange(string username,string newPassword) {
     // 保存更改后的用户信息回到文件
     std::ofstream outFile(USER_PATH);
     for (int i = 0; i < numUsers; i++) {
-        outFile << users[i].username << ' ' << users[i].password <<'  '<<users[i].userCatgory<<'\n';
+        outFile << users[i].username <<" " << users[i].password <<" " << users[i].userCatgory << '\n';
     }
     outFile.close();
     return true;
@@ -263,10 +301,11 @@ void printUsers() {
     //文件读入到users[]
     for (int i = 0; i < numUsers; i++) {
         cout << endl;
-        cout << users[i].username <<'\t' << users[i].userCatgory << "\n";
-        cout << "已借阅书籍如下：\n";
+        cout << setw(10) << users[i].username <<"  (  " << users[i].userCatgory << "  )";
+        cout <<setw(10) << "已借阅书籍如下：\n";
         readerConstructed(users[i].username);//初始化用每个户库
         printBorrowedBooks(users[i].username);
+        cout << endl << endl;
         readerConstructed(currentUser.username);//初始化用每个户库
     }
         return;
@@ -394,16 +433,21 @@ void addSU() {
 
     for (int i = 0; i < numUsers; i++) {
         cout << endl;
-        cout << users[i].username << '\t' << "catgory:"<<users[i].userCatgory << "\n";
+        cout << "\t"<<users[i].username << "  (  " << users[i].userCatgory << "  )\n";
 
     }
 
     string username,newCatdory;
-    cout << "请选择要更改的用户:  ";
+    cout << "-请选择要更改的用户: (输入0返回上级) ";
     cin >> username;
-    cout << "请选择要更改的身份：  ";
+    if (username.length() == 1)
+    if (stoi(username) == 0) {
+        back(false);
+        return;
+    }
+    cout << "--请选择要更改的身份：  ";
     int choice;
-    cout << "1.图书管理员  2.普通用户  3.超级用户" << endl;
+    cout << "\n---1.图书管理员  \n---2.普通用户  \n---3.超级用户" << endl;
     cin >> choice;
     switch (choice) {
         case 1:
@@ -416,7 +460,7 @@ void addSU() {
             newCatdory = "admin";
             break;
             default:
-			cout << "输入错误" << endl;
+			cout << "----输入错误" << endl;
     }
 
     int i;

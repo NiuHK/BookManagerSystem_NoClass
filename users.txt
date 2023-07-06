@@ -1,5 +1,0 @@
-admin 0000 admin
-librarian 0000 librarian
-user 0000 librarian
-test3 0000 user
-test2 0000 user

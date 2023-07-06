@@ -47,7 +47,7 @@ bool addBook(const int bookID) {
             books[i].quantity++;
            
             saveDatabase();
-            cout << "Book added (lib) successfully." << endl;
+            cout << "图书添加成功！\n";
             return true;
         }
     }
@@ -90,17 +90,18 @@ void removeBook(const int bookID) {
 
 
 void printDatabase() {
+    int width = 20;
     loadDatabase();//输出前先从库初始化
-    cout << "----- Database -----" << endl;
+    cout << setw(width) << "-----------书库如下-----------" << endl;
     for (int i = 0; i < numBooks; i++) {
-        cout << "Book ID: " << books[i].bookId << endl;
-        cout << "Book Name: " << books[i].bookName << endl;
-        cout << "Author: " << books[i].authorName << endl;
-        cout << "Quantity: " << books[i].quantity << endl;
-        cout << "Publish Year: " << books[i].year << endl;
-        cout << "-------------------" << endl;
+        cout << setw(width) << "Book ID: " << books[i].bookId << endl;
+        cout << setw(width) << "Book Name: " << books[i].bookName << endl;
+        cout << setw(width) << "Author: " << books[i].authorName << endl;
+        cout << setw(width) << "Quantity: " << books[i].quantity << endl;
+        cout << setw(width) << "Publish Year: " << books[i].year << endl;
+        cout << setw(width) << "-----------------------------" << endl;
     }
-    cout << "----- End of Database -----" << endl;
+    cout << setw(width) << "----- End of Database -----" << endl;
 }
 
 bool printSimpleItem(int bookId) {//通过bookId查找信息

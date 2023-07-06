@@ -1,5 +1,6 @@
 #pragma once
 #include"DatabaseOperation.h"
+#include"Menu.h"
 #include <fstream>
 #include <iostream>
 #include <algorithm>
@@ -15,6 +16,7 @@ void readerConstructed(string username);
     bool saveData(string username);
     bool sortBookIds(string username);
     bool clearDatabase(string username);
+    void addTxtFile(const string& filename);
     void editTxtFile(const string& filename);
     void printTxtFile(const string& filename);
     bool passwdChange(string username, string newPassword);

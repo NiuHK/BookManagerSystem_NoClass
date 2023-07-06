@@ -25,6 +25,5 @@ struct Book {
 };
 
 
-
 #endif //STRUCT_H
 
