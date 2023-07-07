@@ -37,9 +37,10 @@ void returnBookU() {
         back(false);
         return;
     }
-
+    readerConstructed(currentUser.username);//初始化用每个户库
     returnBook(currentUser.username, bookId);
-
+    for(int i=0;i<100;i++)
+    printSimpleItem(borrowedBooks[i].bookId);
     cout << endl << endl;
     back(true);
 }

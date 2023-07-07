@@ -1,9 +1,6 @@
 #pragma once
 #include"DatabaseOperation.h"
 #include"Menu.h"
-#include <fstream>
-#include <iostream>
-#include <algorithm>
 
 
 void readerConstructed(string username);//≈–∂œ“Ï≥£
@@ -14,7 +11,7 @@ string getPasswd();
     void borrowBook(string username,int bookId);
     bool returnBook(string username,int bookId);
     bool printBorrowedBooks(string username);//Change the structure
-    bool searchBooks(const std::string& searchTerm);
+    bool searchBooks(const string& searchTerm);
     bool saveData(string username);
     bool sortBookIds(string username);
     bool clearDatabase(string username);

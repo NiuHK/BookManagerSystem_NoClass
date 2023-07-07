@@ -52,16 +52,10 @@ void showMenu(const User& user) {
         return;
     }
 
-   // cout << "欢迎，" << currentUser.username << "！请选择您的角色：" << endl;//输出全局currentuser
     if (user.userCatgory == "admin") {
-    /*    cout << "1. 普通用户" << endl;
-        cout << "2. 图书管理员" << endl;
-        cout << "3. 超级管理员" << endl;*/
         adminMenu(user);
     }
     else if (user.userCatgory == "librarian") {
-    /*    cout << "1. 普通用户" << endl;
-        cout << "2. 图书管理员" << endl;*/
         librarianMenu(user);
     }
     else {

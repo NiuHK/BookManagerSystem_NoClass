@@ -1,12 +1,7 @@
 #include "DatabaseOperation.h"
 
 using namespace std;
-
-
-
-
-
-bool addBook(const std::string& bookName, const std::string& authorName, int quantity, int year) {
+bool addBook(const  string& bookName, const  string& authorName, int quantity, int year) {
     loadDatabase();//输出前先从库初始化
     for (int i = 0; i < numBooks; i++) {
         if (books[i].bookName == bookName) {
@@ -71,22 +66,6 @@ void removeBook(const int bookID) {
     }
     cout << "Book not found in the database." << endl;
 }
-
-//void returnBook(const int bookID) {
-//    loadDatabase();//输出前先从库初始化
-//    for (int i = 0; i < numBooks; i++) {
-//        if (books[i].bookId == bookID) {
-//            // 图书存在，减少数量
-//            books[i].quantity--;
-//            numBooks--;
-//        }
-//        saveDatabase();
-//        return;
-//    }
-//    cout << "Book not found in the database." << endl;
-//}
-
-
 
 
 void printDatabase() {
@@ -187,20 +166,20 @@ void saveDatabase() {
 }
 
 
-void searchBook(const std::string& searchQuery) {
+void searchBook(const  string& searchQuery) {
     bool found = false;
     for (int i = 0; i < numBooks; i++) {
         if (books[i].bookName == searchQuery || books[i].authorName == searchQuery) {
-            std::cout << "Book ID: " << books[i].bookId << std::endl;
-            std::cout << "Book Name: " << books[i].bookName << std::endl;
-            std::cout << "Author: " << books[i].authorName << std::endl;
-            std::cout << "Quantity: " << books[i].quantity << std::endl;
-            std::cout << "-------------------------" << std::endl;
+             cout << "Book ID: " << books[i].bookId <<  endl;
+             cout << "Book Name: " << books[i].bookName <<  endl;
+             cout << "Author: " << books[i].authorName <<  endl;
+             cout << "Quantity: " << books[i].quantity <<  endl;
+             cout << "-------------------------" <<  endl;
             found = true;
         }
     }
     if (!found) {
-        std::cout << "Book not found in the database." << std::endl;
+         cout << "Book not found in the database." <<  endl;
     }
 }
 
@@ -223,13 +202,13 @@ int getNumBooks() {
 
 
 void clearTxt(string filename) {
-    std::ofstream file(filename, std::ios::trunc);  // 打开文件并截断内容
+     ofstream file(filename,  ios::trunc);  // 打开文件并截断内容
 
     if (file.is_open()) {
         file.close();
-        std::cout << "文件已成功清空。" << std::endl;
     }
     else {
-        std::cout << "无法打开文件。" << std::endl;
+         cout << "无法打开文件。" <<  endl;
     }
 }
+

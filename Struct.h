@@ -18,8 +18,8 @@ struct User {
 
 struct Book {
     int bookId;
-    std::string bookName;
-    std::string authorName;
+    string bookName;
+    string authorName;
     int quantity;
     int year;
 };

@@ -1,0 +1,19 @@
+﻿  DatabaseOperation.cpp
+D:\visual stuudio\community\VC\Tools\MSVC\14.34.31933\include\filesystem(13): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  Main.cpp
+D:\visual stuudio\community\VC\Tools\MSVC\14.34.31933\include\filesystem(13): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  Menu.cpp
+D:\visual stuudio\community\VC\Tools\MSVC\14.34.31933\include\filesystem(13): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  ReaderOperation.cpp
+D:\visual stuudio\community\VC\Tools\MSVC\14.34.31933\include\filesystem(13): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  UserOperation.cpp
+D:\visual stuudio\community\VC\Tools\MSVC\14.34.31933\include\filesystem(13): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+D:\repos\BMS-OneFile\UserOperation.cpp(160,5): warning C4102: “aefault”: 未引用的标签
+  globals.cpp
+D:\visual stuudio\community\VC\Tools\MSVC\14.34.31933\include\filesystem(13): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  正在生成代码
+  17 of 368 functions ( 4.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    12 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  BMS-OneFile.vcxproj -> D:\repos\BMS-OneFile\x64\Release\BMS-OneFile.exe

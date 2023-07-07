@@ -1,6 +1,5 @@
 
 #include"ReaderOperation.h"
-//#include "DatabaseOperation.cpp"
 
 string getPasswd() {
     string passwd;
@@ -10,12 +9,13 @@ string getPasswd() {
         if (ch == '\b') {  // 处理退格键
             if (!passwd.empty()) {
                 passwd.pop_back();
-                std::cout << "\b \b";
+                
+                cout << "\b \b";
             }
         }
         else {
             passwd.push_back(ch);
-            std::cout << '*';
+             cout << '*';
         }
     }
 #endif
@@ -46,7 +46,7 @@ void constructedAll() {
     User users[100];
     ifstream userFile(USER_PATH);
     int numUsers = 0;
-    std::string line;
+     string line;
     
     // 读取文件内容并解析用户信息
     while (getline(userFile, line)) {
@@ -55,7 +55,7 @@ void constructedAll() {
         size_t delimiterPos = line.find(' ');
         string temp = line.substr(delimiterPos + 1);
         size_t delimiterPos2 = temp.find(' ');
-        if (delimiterPos != std::string::npos) {
+        if (delimiterPos !=  string::npos) {
             users[numUsers].username = line.substr(0, delimiterPos);
             readerConstructed(users[numUsers].username);//初始化用每个户库
             numUsers++;
@@ -97,34 +97,31 @@ void borrowBook(string username, int bookId) {
 bool returnBook(string username, int bookId) {
     // Check if the book exists in the database
     Book* thisbooks = getBooks();
-    int numBooks = getNumBooks();
     for (int i = 0; i < bookNumber; i++) {
-        {if (borrowedBooks[i].bookId == bookId) {
-
-            for (int i = 0; i < numBooks; i++) {
-                if (books[i].bookId == bookId) {
+        if (borrowedBooks[i].bookId == bookId) { 
+            for (int j = 0; j < numBooks; j++) {
+                if (books[j].bookId == bookId) {
                     // Book found in the database, add it
-                    for (i = 0; i < bookNumber; i++) {
-                        if (borrowedBooks[i].bookId == bookId) {
-                            borrowedBooks[i].bookId = 0;
-                            borrowedBooks[i].borrowedTime = 0;
-                            break;
-                        }
-                    }
+                    borrowedBooks[i].bookId = 0;
+                    borrowedBooks[i].borrowedTime = 0;
+                    numBooks--;
+                    bookNumber--;
+                    break;
+                }
+            }
                     saveData(username);//更新到username的数据库内
-                    //   sortBookIds(username);
                     bool judge = addBook(bookId);//add to library
                     if (judge)
                     {
-                        cout << "Book returned successfully." << endl;
+                        cout << "Book returned successfully."<< numBooks<<" "<< bookNumber << endl;
                         return true;
                     }
                     cout << "Book returned failed." << endl;
                     return false;
-                }
-            }
+                
+            
         }
-        }
+        
     }
 
     cout << "Book not borrowed by the reader." << endl;
@@ -165,9 +162,8 @@ bool saveData(string username) {//写到txt中
     }
 
     for (BorrowedBooks toGetBookId : borrowedBooks) {
-        int bookId = toGetBookId.bookId;
-        if( bookId!=0)
-        readerFile << bookId <<" "<< toGetBookId.borrowedTime<< endl;
+        if(toGetBookId.bookId !=0)
+        readerFile << toGetBookId.bookId <<" "<< toGetBookId.borrowedTime<< endl;
     }
 
     readerFile.close();
@@ -195,10 +191,10 @@ bool clearDatabase(string username) {
 
 void addTxtFile(const string& filename) {
     time_t ts = time(NULL);
-    std::ofstream outFile(filename, ios::app);//| std::ios::trunc
+     ofstream outFile(filename, ios::app);//|  ios::trunc
 
     if (!outFile) {
-        cerr << "Error opening file: " << filename << std::endl;
+        cerr << "Error opening file: " << filename <<  endl;
         return;
     }
 
@@ -216,10 +212,10 @@ void addTxtFile(const string& filename) {
 
 void editTxtFile(const string& filename) {
     time_t ts = time(NULL);
-    std::ofstream outFile(filename, ios::out | std::ios::trunc);
+     ofstream outFile(filename, ios::out |  ios::trunc);
 
     if (!outFile) {
-        cerr << "Error opening file: " << filename << std::endl;
+        cerr << "Error opening file: " << filename <<  endl;
         return;
     }
 
@@ -235,18 +231,18 @@ void editTxtFile(const string& filename) {
 }
 
 void printTxtFile(const string& filename) {
-    std::ifstream inFile(filename, std::ios::in);
+     ifstream inFile(filename,  ios::in);
 
     if (!inFile) {
-        std::cerr << "Error opening file: " << filename << std::endl;
+         cerr << "Error opening file: " << filename <<  endl;
         return;
     }
 
-    std::string line;
-  //  std::cout << "Content of the file:\n";
+     string line;
+  //   cout << "Content of the file:\n";
 
-    while (std::getline(inFile, line)) {
-        std::cout << line << '\n';
+    while ( getline(inFile, line)) {
+         cout << line << '\n';
     }
 
     inFile.close();
@@ -293,12 +289,12 @@ bool passwdChange(string username,string newPassword) {
     ifstream userFile(USER_PATH);
     User users[MAX_USERS];
     int numUsers = 0;
-    std::string line;
+     string line;
 
     // 读取文件内容并解析用户信息
     while (getline(userFile, line)) {
         if (numUsers >= MAX_USERS) {
-            std::cout << "达到最大用户数" << std::endl;
+             cout << "达到最大用户数" <<  endl;
             break;
         }
 
@@ -306,7 +302,7 @@ bool passwdChange(string username,string newPassword) {
         size_t delimiterPos = line.find(' ');
         string temp = line.substr(delimiterPos + 1);
         size_t delimiterPos2 = temp.find(' ');
-        if (delimiterPos != std::string::npos) {
+        if (delimiterPos !=  string::npos) {
             users[numUsers].username = line.substr(0, delimiterPos);
             users[numUsers].password = temp.substr(0, delimiterPos2);
             users[numUsers].userCatgory = temp.substr(delimiterPos2 + 1);
@@ -325,7 +321,7 @@ bool passwdChange(string username,string newPassword) {
     }
 
     // 保存更改后的用户信息回到文件
-    std::ofstream outFile(USER_PATH);
+     ofstream outFile(USER_PATH);
     for (int i = 0; i < numUsers; i++) {
         outFile << users[i].username <<" " << users[i].password <<" " << users[i].userCatgory << '\n';
     }
@@ -336,12 +332,12 @@ void printUsers() {
     ifstream userFile(USER_PATH);
     User users[MAX_USERS];
     int numUsers = 0;
-    std::string line;
+     string line;
 
     // 读取文件内容并解析用户信息
     while (getline(userFile, line)) {
         if (numUsers >= MAX_USERS) {
-            std::cout << "达到最大用户数" << std::endl;
+             cout << "达到最大用户数" <<  endl;
             break;
         }
 
@@ -349,7 +345,7 @@ void printUsers() {
         size_t delimiterPos = line.find(' ');
         string temp = line.substr(delimiterPos + 1);
         size_t delimiterPos2 = temp.find(' ');
-        if (delimiterPos != std::string::npos) {
+        if (delimiterPos !=  string::npos) {
             users[numUsers].username = line.substr(0, delimiterPos);
             users[numUsers].password = temp.substr(0, delimiterPos2);
             users[numUsers].userCatgory = temp.substr(delimiterPos2 + 1);
@@ -376,18 +372,18 @@ void addUser(string username, string password) {
     ifstream userFile(USER_PATH);
     User users[MAX_USERS];
     int numUsers = 0;
-    std::string line;
+     string line;
     // 读取文件内容并解析用户信息
     while (getline(userFile, line)) {
         if (numUsers >= MAX_USERS) {
-            std::cout << "达到最大用户数" << std::endl;
+             cout << "达到最大用户数" <<  endl;
             break;
         }
         //录入user信息
         size_t delimiterPos = line.find(' ');
         string temp = line.substr(delimiterPos + 1);
         size_t delimiterPos2 = temp.find(' ');
-        if (delimiterPos != std::string::npos) {
+        if (delimiterPos !=  string::npos) {
             users[numUsers].username = line.substr(0, delimiterPos);
             users[numUsers].password = temp.substr(0, delimiterPos2);
             users[numUsers].userCatgory=temp.substr(delimiterPos2+1);
@@ -423,18 +419,18 @@ bool deleteUser(string username) {
     ifstream userFile(USER_PATH);
     User users[MAX_USERS];
     int numUsers = 0;
-    std::string line;
+     string line;
     // 读取文件内容并解析用户信息
     while (getline(userFile, line)) {
         if (numUsers >= MAX_USERS) {
-            std::cout << "达到最大用户数" << std::endl;
+             cout << "达到最大用户数" <<  endl;
             break;
         }
         //录入user信息
         size_t delimiterPos = line.find(' ');
         string temp = line.substr(delimiterPos + 1);
         size_t delimiterPos2 = temp.find(' ');
-        if (delimiterPos != std::string::npos) {
+        if (delimiterPos !=  string::npos) {
             users[numUsers].username = line.substr(0, delimiterPos);
             users[numUsers].password = temp.substr(0, delimiterPos2);
             users[numUsers].userCatgory = temp.substr(delimiterPos2 + 1);
@@ -475,18 +471,18 @@ void addSU() {
     ifstream userFile(USER_PATH);
     User users[MAX_USERS];
     int numUsers = 0;
-    std::string line;
+     string line;
     // 读取文件内容并解析用户信息
     while (getline(userFile, line)) {
         if (numUsers >= MAX_USERS) {
-            std::cout << "达到最大用户数" << std::endl;
+             cout << "达到最大用户数" <<  endl;
             break;
         }
         //录入user信息
         size_t delimiterPos = line.find(' ');
         string temp = line.substr(delimiterPos + 1);
         size_t delimiterPos2 = temp.find(' ');
-        if (delimiterPos != std::string::npos) {
+        if (delimiterPos !=  string::npos) {
             users[numUsers].username = line.substr(0, delimiterPos);
             users[numUsers].password = temp.substr(0, delimiterPos2);
             users[numUsers].userCatgory = temp.substr(delimiterPos2 + 1);
@@ -547,7 +543,7 @@ void addSU() {
 
 
 bool isRightCommit(time_t lastExecutionTime) {
-    time_t days = (time(0) - lastExecutionTime) / (60);//(60 * 60 * 24)天数，用int取整
+    time_t days = (time(0) - lastExecutionTime) / (60 * 60 * 24);//(60 * 60 * 24)天数，用int取整
     if (days > 5)return false;
     return true;
 }
@@ -557,31 +553,31 @@ string showTime(long long time1) {
     time_t time = static_cast<time_t>(time1);//格式转化
     tm* timeinfo = localtime(&time);
     char buffer[11];
-    std::strftime(buffer, sizeof(buffer), "%Y/%m/%d", timeinfo);
+     strftime(buffer, sizeof(buffer), "%Y/%m/%d", timeinfo);
     return buffer;
 }
 
 void recordWrongCommit(string username,BorrowedBooks borrowedBook) {
     // string WRONG_COMMIT;//异常还书记录
-    std::ofstream outputFile(WRONG_COMMIT,ios::app);//增加式写入
+     ofstream outputFile(WRONG_COMMIT,ios::app);//增加式写入
     if (outputFile.is_open()) {
         outputFile << username<<" "<< borrowedBook.bookId<<" "<< showTime(borrowedBook.borrowedTime)<<endl;
         outputFile.close();
     }
 }
 void printWrongCommit() {
-    std::ifstream inFile(WRONG_COMMIT, std::ios::in);
+     ifstream inFile(WRONG_COMMIT,  ios::in);
 
     if (!inFile) {
-        std::cerr << "Error opening file: " << WRONG_COMMIT << std::endl;
+         cerr << "Error opening file: " << WRONG_COMMIT <<  endl;
         return;
     }
 
-    std::string line;
-    //  std::cout << "Content of the file:\n";
+     string line;
+    //   cout << "Content of the file:\n";
 
-    while (std::getline(inFile, line)) {
-        std::cout << line << '\n';
+    while ( getline(inFile, line)) {
+         cout << line << '\n';
     }
 
     inFile.close();

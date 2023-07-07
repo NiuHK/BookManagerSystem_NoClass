@@ -1,4 +1,3 @@
-
 #pragma once
 #include"ReaderOperation.h"
 #include"Menu.h"
@@ -10,7 +9,7 @@ void viewAnnouncementU();//
 void addBookU();//
 void deleteBookU();//
 void publishAnnouncementU();//
-void manageExceptionalReturnsU();
+void manageExceptionalReturnsU();//
 
 void changePasswordU();//
 

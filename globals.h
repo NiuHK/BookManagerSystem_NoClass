@@ -4,15 +4,25 @@
 #define globals_H
 #include"Struct.h"
 #include <time.h>
-#include <iostream>
 #include <iomanip>
 #include <string>
 #include <iostream>
+#include <cstdio>
+#include <fstream>
+#include <iostream>
+#include <algorithm>
+#include <filesystem>
+
 #ifdef _WIN32
 #include <conio.h>  // 用于Windows环境
 #endif
-#include <cstdio>
-//extern time_t CURRENT_TIME;//当前时间
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <sys/stat.h>
+#endif
+
 
 
 extern int numBooks;//借阅的数量
@@ -29,7 +39,6 @@ extern string WRONG_COMMIT_SAVE;//异常还书记录加密
 extern  string USER_DATA_PATH;//用户数据路径
 extern  BorrowedBooks  borrowedBooks[100];//借阅的id
 extern int bookNumber;//借阅数量	最大借100本书
-//extern const int MAX_USERS;//max users
 //library数量可为0
 
 bool AllisNum(string str);//判断字符串是否为数字
