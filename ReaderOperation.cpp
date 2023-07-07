@@ -157,10 +157,9 @@ bool saveData(string username) {//–¥µΩtxt÷–
     sortBookIds(username);
     ofstream readerFile(USER_DATA_PATH+username + ".txt");
     if (!readerFile) {
-        cout << "Failed to save reader's data." << endl;
+        cout << "Failed to save reader's data."<< endl;
         return false;
     }
-
     for (BorrowedBooks toGetBookId : borrowedBooks) {
         if(toGetBookId.bookId !=0)
         readerFile << toGetBookId.bookId <<" "<< toGetBookId.borrowedTime<< endl;
