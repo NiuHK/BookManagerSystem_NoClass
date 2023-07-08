@@ -28,3 +28,4 @@ string getPasswd();
     void recordWrongCommit(string username,BorrowedBooks borrowedBook);
     string showTime(long long time1);
     void printWrongCommit();
+    bool returnBook(string username, int bookId);

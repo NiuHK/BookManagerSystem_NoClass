@@ -69,9 +69,9 @@ void userMenu(const User& user) {
     system("cls");
     readerConstructed(user.username);//初始化用户库
     loadDatabase();//初始化图书库
-
-    cout << "欢迎， " << currentUser.username << "  ！" << endl;//输出全局currentuser
-    cout << setw(width) << left << "普通用户菜单：" << endl;
+    cout << "\n\n\n";
+    cout << "\t    欢迎， " << currentUser.username << "  ！" << endl;//输出全局currentuser
+    cout << "\n\t    普通用户菜单：" << '\n';
     cout << "-------------------------------------------" << '\n';
     cout << setw(width) << left << "1. 借书";
     cout << setw(width) << left << "2. 还书" << endl;
@@ -125,8 +125,9 @@ void librarianMenu(const User& user) {
     system("cls");
     readerConstructed(user.username);//初始化用户de库
     loadDatabase();//初始化图书库
-    cout << "欢迎， " << currentUser.username << "  ！" << endl;//输出全局currentuser
-    cout << setw(width) << left << "图书管理员菜单：" << endl;
+    cout << "\n\n\n";
+    cout << "\t    欢迎， " << currentUser.username << "  ！" << endl;//输出全局currentuser
+    cout << "\n\t     图书管理员菜单：" << '\n';
     cout << "-------------------------------------------" << '\n';
     cout << setw(width) << left << "1. 借书" ;
     cout << setw(width) << left << "2. 还书" << endl;

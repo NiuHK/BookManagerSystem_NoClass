@@ -93,40 +93,70 @@ void borrowBook(string username, int bookId) {
 
     cout << "Book not found in the database." << endl;
 }
-
 bool returnBook(string username, int bookId) {
+    bookId--;
     // Check if the book exists in the database
     Book* thisbooks = getBooks();
-    for (int i = 0; i < bookNumber; i++) {
-        if (borrowedBooks[i].bookId == bookId) { 
+    int bookIdTemp;
             for (int j = 0; j < numBooks; j++) {
-                if (books[j].bookId == bookId) {
+                if (books[j].bookId == borrowedBooks[bookId].bookId) {
                     // Book found in the database, add it
-                    borrowedBooks[i].bookId = 0;
-                    borrowedBooks[i].borrowedTime = 0;
+                    borrowedBooks[bookId].bookId = 0;
+                    borrowedBooks[bookId].borrowedTime = 0;
+                    bookIdTemp = books[j].bookId;
                     numBooks--;
                     bookNumber--;
                     break;
                 }
             }
-                    saveData(username);//更新到username的数据库内
-                    bool judge = addBook(bookId);//add to library
-                    if (judge)
-                    {
-                        cout << "Book returned successfully."<< numBooks<<" "<< bookNumber << endl;
-                        return true;
-                    }
-                    cout << "Book returned failed." << endl;
-                    return false;
-                
+            saveData(username);//更新到username的数据库内
+            bool judge = addBook(bookIdTemp);//add to library
+            if (judge)
+                cout << "Book returned successfully." << numBooks << " " << bookNumber << endl;
+                return true;
             
-        }
+            cout << "Book returned failed." << endl;
+            return false;
         
-    }
-
+    
     cout << "Book not borrowed by the reader." << endl;
     return false;
 }
+
+
+//bool returnBook(string username, int bookId) {
+//    // Check if the book exists in the database
+//    Book* thisbooks = getBooks();
+//    for (int i = 0; i < bookNumber; i++) {
+//        if (borrowedBooks[i].bookId == bookId) { 
+//            for (int j = 0; j < numBooks; j++) {
+//                if (books[j].bookId == bookId) {
+//                    // Book found in the database, add it
+//                    borrowedBooks[i].bookId = 0;
+//                    borrowedBooks[i].borrowedTime = 0;
+//                    numBooks--;
+//                    bookNumber--;
+//                    break;
+//                }
+//            }
+//                    saveData(username);//更新到username的数据库内
+//                    bool judge = addBook(bookId);//add to library
+//                    if (judge)
+//                    {
+//                        cout << "Book returned successfully."<< numBooks<<" "<< bookNumber << endl;
+//                        return true;
+//                    }
+//                    cout << "Book returned failed." << endl;
+//                    return false;
+//                
+//            
+//        }
+//        
+//    }
+//
+//    cout << "Book not borrowed by the reader." << endl;
+//    return false;
+//}
 
 bool printBorrowedBooks(string username) {
 
@@ -141,13 +171,13 @@ bool printBorrowedBooks(string username) {
         return false;
     }
    // cout << "Borrowed Books: " << endl;
-    cout << "-------------------------------------------------------------------------------------------\n";
+    cout << "-------------------------------------------------------------------------------------------------------------------------------------\n";
     for (int i = 0; i < bookNumber; i++) {
-        cout << i+1 << "\t";//输出序号
+        cout << "条目编号： " << i + 1;//输出序号
         printSimpleItem(borrowedBooks[i].bookId);//格式输出借阅信息
-        cout <<showTime(borrowedBooks[i].borrowedTime) << endl;
+        cout << "借阅时间： " <<setw(10)<<showTime(borrowedBooks[i].borrowedTime) << endl<<endl;
     }
-    cout << "-------------------------------------------------------------------------------------------\n";    return true;
+    cout << "-------------------------------------------------------------------------------------------------------------------------------------\n";    return true;
    // clearDatabase(username);
 }
 
@@ -247,14 +277,14 @@ void printTxtFile(const string& filename) {
     inFile.close();
 }
 bool searchBooks(const string& searchTerm) {
-        // Search for books by title or author in the database
-        Book* books = getBooks();
-        int numBooks = getNumBooks();
+    // Search for books by title or author in the database
+    int numBooks = getNumBooks();
+    loadDatabase();
+    int i = 0;
+    for (i = 0; i < numBooks; i++) {
 
-        
 
-        for (int i = 0; i < numBooks; i++) {
-            if (AllisNum(searchTerm)) {
+        if (AllisNum(searchTerm)) {
             if (books[i].bookName == searchTerm || books[i].authorName == searchTerm || books[i].bookId == stoi(searchTerm)) {
                 cout << "-------------------------" << endl;
                 cout << "Book ID: " << books[i].bookId << endl;
@@ -262,27 +292,21 @@ bool searchBooks(const string& searchTerm) {
                 cout << "Author: " << books[i].authorName << endl;
                 cout << "Quantity: " << books[i].quantity << endl;
                 cout << "-------------------------" << endl;
-                return true;
             }
-            }
-            else {
-                if (books[i].bookName == searchTerm || books[i].authorName == searchTerm ) {
-                    cout << "-------------------------" << endl;
-                    cout << "Book ID: " << books[i].bookId << endl;
-                    cout << "Book Name: " << books[i].bookName << endl;
-                    cout << "Author: " << books[i].authorName << endl;
-                    cout << "Quantity: " << books[i].quantity << endl;
-                    cout << "-------------------------" << endl;
-                    return true;
-                }
-            }
-
-            return false;
-            cout << "Book not found in the database." << endl;
         }
-
-    
+        else {
+            if (books[i].bookName == searchTerm || books[i].authorName == searchTerm) {
+                cout << "-------------------------" << endl;
+                cout << "Book ID: " << books[i].bookId << endl;
+                cout << "Book Name: " << books[i].bookName << endl;
+                cout << "Author: " << books[i].authorName << endl;
+                cout << "Quantity: " << books[i].quantity << endl;
+                cout << "-------------------------" << endl;
+            }
+        }
+    }
 }
+    
 const int MAX_USERS = 100;
 bool passwdChange(string username,string newPassword) {
     ifstream userFile(USER_PATH);
@@ -542,7 +566,7 @@ void addSU() {
 
 
 bool isRightCommit(time_t lastExecutionTime) {
-    time_t days = (time(0) - lastExecutionTime) / (60 * 60 * 24);//(60 * 60 * 24)天数，用int取整
+    time_t days = (time(0) - lastExecutionTime) / (60);//(60 * 60 * 24)天数，用int取整
     if (days > 5)return false;
     return true;
 }
@@ -573,10 +597,15 @@ void printWrongCommit() {
     }
 
      string line;
-    //   cout << "Content of the file:\n";
+     string userename;
+     int bookid;
+     string borredtime;
+    while (inFile>>userename) {
+        inFile >> bookid >> borredtime;
 
-    while ( getline(inFile, line)) {
-         cout << line << '\n';
+        cout <<setw(10)<< userename <<"    借阅日期"<< setw(12) << borredtime;
+        printSimpleItem(bookid);
+        cout<< endl<<endl;
     }
 
     inFile.close();

@@ -90,10 +90,10 @@ bool printSimpleItem(int bookId) {//通过bookId查找信息
     for (int i = 0; i < numBooks; i++) {
         if (books[i].bookId == bookId) 
         {
-   cout << "Book ID: " << books[i].bookId <<"\t";
-   cout << "Book Name: " << books[i].bookName << "\t";
-        cout << "Author: " << books[i].authorName << "\t" << "\t";
-        cout << "Publish Year: " << books[i].year << endl;
+   cout <<"     书籍 ID: " << setw(3) << books[i].bookId <<"\t";
+   cout << "书籍名称: " << setw(10) << books[i].bookName << "\t";
+        cout << "作者: " << setw(10) << books[i].authorName << "\t" << "\t";
+        cout << "刊登年份: " << setw(6) << books[i].year ;
         return true;
         }
     }

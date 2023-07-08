@@ -30,7 +30,7 @@ void returnBookU() {
     printBorrowedBooks(currentUser.username);
 
     cout << endl << endl;
-    cout << "\t\t-还书-"<<endl<<"请输入要还的书籍ID:  (输入0返回上一级)";
+    cout << "\t\t-还书-"<<endl<<"请输入要还的书籍条目:  (输入0返回上一级)";
     cin >> bookId;
 
     if (bookId == 0) {
@@ -39,9 +39,6 @@ void returnBookU() {
     }
     readerConstructed(currentUser.username);//初始化用每个户库
     returnBook(currentUser.username, bookId);
-    for(int i=0;i<100;i++)
-    printSimpleItem(borrowedBooks[i].bookId);
-    cout << endl << endl;
     back(true);
 }
 
